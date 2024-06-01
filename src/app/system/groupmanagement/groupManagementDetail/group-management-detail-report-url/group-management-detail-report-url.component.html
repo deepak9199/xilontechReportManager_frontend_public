@@ -1,0 +1,73 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Report Url</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <!-- <li class="breadcrumb-item"><a (click)='home()'>Home</a></li> -->
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /below the containts -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-Border">
+                        <div class="card">
+                            <!-- <div class="card-header">
+                                <div class="input-group input-group-sm float-sm-right" style="width: 170px;">
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modal-createactivities" type="button"
+                                            class="btn btn-default"
+                                            style="background-color: #007bff;color: cornsilk;">Create Activities
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped projects" id="excel-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Select</th>
+                                            <th class="text-center">Url Name</th>
+                                            <th class="text-center">Url Description</th>
+                                            <th class="text-center">Added On</th>
+                                        </tr>
+                                    </thead>
+                                    <app-loading *ngIf="loading"></app-loading>
+                                    <tbody>
+                                        <tr *ngFor="let obj of RMReportUrlList">
+                                            <td class="text-center">
+                                                <a>
+                                                    <input class="form-check-input" type="checkbox"
+                                                        [checked]="obj.isselected" (change)="Assigned(obj,$event)">
+                                                    .
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.reportName}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.reportDescription}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.datetime}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

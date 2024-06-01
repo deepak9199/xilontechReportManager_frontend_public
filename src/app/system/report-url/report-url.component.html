@@ -1,0 +1,218 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Report Url</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <!-- <li class="breadcrumb-item"><a (click)='home()'>Home</a></li> -->
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /below the containts -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-Border">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="input-group input-group-sm float-sm-right" style="width: 170px;">
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modal-create" type="button"
+                                            class="btn btn-default" style="background-color: #007bff;color: cornsilk;"
+                                            (click)="setEmpty()">Create Url
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped projects" id="excel-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Url Name</th>
+                                            <th class="text-center">Url Description</th>
+                                            <th class="text-center">Added On</th>
+                                        </tr>
+                                    </thead>
+                                    <app-loading *ngIf="loading"></app-loading>
+                                    <tbody>
+                                        <tr *ngFor="let obj of ReportManagerUrlList">
+                                            <td class="text-center">
+                                                {{obj.reportName}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.reportDescription}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.datetime}}
+                                            </td>
+                                            <td class="text-center py-0 align-middle">
+                                                <div>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <a class="btn btn-info" style="color: white;"
+                                                            data-toggle="modal" data-target="#modal-Edit"
+                                                            (click)=update(obj)><i class="fas fa-pencil-alt"></i></a>
+                                                        <a (click)=deteleYesNo(obj) class="btn btn-danger"
+                                                            data-toggle="modal" data-target="#modal-delete"
+                                                            style="color: white;"><i class="fas fa-trash"></i></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header"> -->
+            <!-- <div class="modal-body"> -->
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create Report Url</h3>
+                    <button id="cancelCreate" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form name="formCreate" #myNgForm="ngForm" (ngSubmit)="add()">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="reportName">Report Url Name</label>
+                            <input type="text" class="form-control" id="reportName" name="reportName"
+                                placeholder="Enter The reportName" [(ngModel)]="formCreate.reportName">
+                        </div>
+                        <div class="form-group">
+                            <label for="reportDescription">Report Url Description</label>
+                            <input type="text" class="form-control" id="reportDescription" name="reportDescription"
+                                placeholder="Enter The reportDescription" [(ngModel)]="formCreate.reportDescription"
+                                required #reportDescription="ngModel">
+                        </div>
+                        <div class="form-group">
+                            <label for="reportUrl">Report Url</label>
+                            <input type="text" class="form-control" id="reportUrl" name="reportUrl"
+                                placeholder="Enter The reportUrl" [(ngModel)]="formCreate.reportUrl" required
+                                #reportUrl="ngModel">
+                        </div>
+                        <div class="form-group">
+                            <label for="assigntogroup">Assign To Group</label>
+                            <select class="form-control" id="assigntogroup" name="assigntogroup"
+                                placeholder="Enter The assigntogroup" [(ngModel)]="formCreate.assigntogroup" required>
+                                <option value=''>
+                                    Select Group/None
+                                </option>
+                                <option *ngFor="let obj of reportmanagerGroupmanagmentList" value='{{obj.id}}'>
+                                    {{obj.groupName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+            <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-Edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header"> -->
+            <!-- <div class="modal-body"> -->
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update a Url</h3>
+                    <button id="cancelEdit" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form name="formEdit" #myNgForm="ngForm" (ngSubmit)="edit();myNgForm.resetForm()">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="reportName">Group Name</label>
+                            <input type="text" class="form-control" id="reportName" name="reportName"
+                                placeholder="Enter The reportName" [(ngModel)]="formEdit.reportName">
+                        </div>
+                        <div class="form-group">
+                            <label for="reportDescription">Group Description</label>
+                            <input type="text" class="form-control" id="reportDescription" name="reportDescription"
+                                placeholder="Enter The reportDescription" [(ngModel)]="formEdit.reportDescription"
+                                required #reportDescription="ngModel">
+                        </div>
+                        <div class="form-group">
+                            <label for="reportUrl">Group Description</label>
+                            <input type="text" class="form-control" id="reportUrl" name="reportUrl"
+                                placeholder="Enter The reportUrl" [(ngModel)]="formEdit.reportUrl" required
+                                #reportUrl="ngModel">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+            <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header"> -->
+            <!-- <div class="modal-body"> -->
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Delete</h3>
+                    <button id="cancelDelete" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <p style="font-size: 20px;padding: 20px;">Are You Want To Delete</p>
+                <div class="card-footer" id="footer" style="float: left;">
+                    <button type="button" class="btn btn-primary" style="margin-right: 5px;"
+                        (click)="deleteYes()">Yes</button>
+                    <button type="button" class="btn btn-primary" (click)="deleteNo()">No</button>
+                </div>
+            </div>
+            <!-- /.card -->
+
+            <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>

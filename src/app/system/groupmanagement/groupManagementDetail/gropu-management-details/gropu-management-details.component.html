@@ -1,0 +1,141 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Group Management Detail</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <!-- <li class="breadcrumb-item"><a (click)='home()'>Home</a></li> -->
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /below the containts -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-Border">
+                        <div class="card">
+                            <div class="card-header">
+                                <app-loading *ngIf="loading"></app-loading>
+                                <form name="formUpdateGroupManagement" #myNgFormNew="ngForm" (ngSubmit)="edit()">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="groupName">Group Name</label><span class="required">
+                                                    *</span>
+                                                <input type="text" class="form-control" id="groupName" name="groupName"
+                                                    placeholder="Enter The groupName"
+                                                    [(ngModel)]="formUpdateGroupManagement.groupName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="groupDescription">Group Description</label><span
+                                                    class="required"> *</span>
+                                                <input type="text" class="form-control" id="groupDescription"
+                                                    name="groupDescription" placeholder="Enter The groupDescription"
+                                                    [(ngModel)]="formUpdateGroupManagement.groupDescription" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group" style="margin-top: 27px;">
+                                                <button data-toggle="modal" data-target="#modal-createactivities"
+                                                    type="submit" class="btn btn-default"
+                                                    style="background-color: #007bff;color: cornsilk;">Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="input-group input-group-sm float-sm-right" style="width: 170px;">
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modal-createactivities" type="button"
+                                            class="btn btn-default" style="background-color: #007bff;color: cornsilk;"
+                                            (click)="routeReportList()">Add Report
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped projects" id="excel-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Url Name</th>
+                                            <th class="text-center">Url Description</th>
+                                            <th class="text-center">Added On</th>
+                                        </tr>
+                                    </thead>
+                                    <app-loading *ngIf="loadingReportUrl"></app-loading>
+                                    <tbody>
+                                        <tr *ngFor="let obj of RMReportUrlList">
+                                            <td class="text-center">
+                                                {{obj.reportName}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.reportDescription}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.datetime}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="input-group input-group-sm float-sm-right" style="width: 170px;">
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modal-createactivities" type="button"
+                                            class="btn btn-default" style="background-color: #007bff;color: cornsilk;"
+                                            (click)="routeUserList()">Add User
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped projects" id="excel-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Organization Code</th>
+                                            <th class=" text-center">Comapny Name</th>
+                                            <th class="text-center">Contact No.</th>
+                                        </tr>
+                                    </thead>
+                                    <app-loading *ngIf="loadingUser"></app-loading>
+                                    <tbody>
+                                        <tr *ngFor="let obj of AccountListRM">
+                                            <td class="text-center">
+                                                {{obj.firstName}} {{obj.middleName}} {{obj.lastName}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.orgCode}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.companyname}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{obj.contactnumber}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
